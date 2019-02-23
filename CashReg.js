@@ -1,8 +1,12 @@
 function checkCashRegister(price, cash, cid) {
-  var change;
+  //Crate an empty object for the answer
+  let change={status:"", change:[]};
+  //Create a currency table array for the denominations
   const currencyTable=[["PENNY", 0.01], ["NICKEL", 0.05], ["DIME", 0.1], ["QUARTER", 0.25], 
                        ["DOLLAR", 1], ["FIVE", 5], ["TEN", 10],	["TWENTY", 20],	["ONE HUNDRED", 100]];
-  // Here is your change, ma'am.
+  
+  
+  
   return change;
 }
 

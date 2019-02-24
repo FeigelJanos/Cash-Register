@@ -10,7 +10,7 @@ function checkCashRegister(price, cash, cid) {
   let overpay=cash-price;
   let nom=0;
   let all=0;
-  
+
   
   //Add all money together into a var
   for(let i=0; i<currencyTable.length; i++){
@@ -26,10 +26,12 @@ function checkCashRegister(price, cash, cid) {
     for(nom; nom>0; nom--){
       let counter=0;
       if(overpay==all){
+        
         changeAnswer.status="CLOSED";
         changeAnswer.change=[...cid];
       }
       else if(overpay>0&&overpay>all){
+        
         changeAnswer.status="INSUFFICIENT_FUNDS";
         changeAnswer.change=[];
       }
@@ -37,8 +39,8 @@ function checkCashRegister(price, cash, cid) {
         
        let currentDenom=currencyTable[nom][1];
 
-        for(let i=registerContent[nom][1]; i>0; i-currentDenom){
-     
+        /*for(let i=registerContent[nom][1]; i>0; i= i-currentDenom){
+          console.log(i)
           if(changeAnswer.change[counter][0]==currencyTable[nom][0]){
             changeAnswer.change[0][1]+=currentDenom;
           }
@@ -46,27 +48,11 @@ function checkCashRegister(price, cash, cid) {
             changeAnswer.change.push(currencyTable[nom]);
             
           }
-        
-        
+        changeAnswer.change.push(currencyTable[nom]);
+        */
         }
         counter++; 
       }
- 
-    }
-     
+   console.log(changeAnswer.change);
   return changeAnswer;
 }
-
-// Example cash-in-drawer array:
-// [["PENNY", 1.01],
-// ["NICKEL", 2.05],
-// ["DIME", 3.1],
-// ["QUARTER", 4.25],
-// ["ONE", 90],
-// ["FIVE", 55],
-// ["TEN", 20],
-// ["TWENTY", 60],
-// ["ONE HUNDRED", 100]]
-
-checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25],
-                             ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);

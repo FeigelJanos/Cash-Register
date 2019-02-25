@@ -1,58 +1,76 @@
 function checkCashRegister(price, cash, cid) {
-  //Crate an empty object for the answer
-  let changeAnswer={status:"OPEN", change:[]};
-  //Create a currency table array for the denominations
-  const currencyTable=[["PENNY", 0.01], ["NICKEL", 0.05], ["DIME", 0.1], 
-  ["QUARTER", 0.25], ["DOLLAR", 1], ["FIVE", 5], ["TEN", 10],	["TWENTY", 20],	
-  ["ONE HUNDRED", 100]];
-  
-  let registerContent=[...cid]
-  let overpay=cash-price;
-  let nom=0;
-  let all=0;
+    let answer={status:"", change:[]};
+    let currencies=	[100, 20, 10, 5, 1, 0.25, 0.1, 0.05, 0.01];//OK
+    let revCurrencies=[0.01, 0.05,  0.1, 0.25, 1, 5, 10, 20, 100];
+    let names=["ONE HUNDRED", "TWENTY", "TEN", "FIVE", "ONE",
+     "QUARTER", "DIME", "NICKEL", "PENNY"]
+    let inRegister=[]; //OK
+    let inRegisterReverse=[];
+    let timesChange=[];
+    let overpay=cash-price;//OK
+    let allChange=0;//OK
+    let allGoodChange=0;//OK
+    let counter=0;
+    let answerElement=[];
+    let revCounter=8;
 
+    for (let i=0; i<currencies.length; i++){//OK
+      
+      inRegister[i]=cid[i][1];//OK
+      inRegisterReverse[i]=cid[revCounter][1];
+      revCounter--;
+    }
+
+    
+    for(let i=0; i<cid.length; i++){ //OK
+      allChange+=cid[i][1];
   
-  //Add all money together into a var
-  for(let i=0; i<currencyTable.length; i++){
-   
-    //Create a var that shows the beginning of the cange denom
-    if(overpay>currencyTable[i][1]){
-      nom=i;
-      all+=registerContent[i][1];
+      if(overpay>=revCurrencies[i]){//OK
+        allGoodChange+=cid[i][1];
+      }
+    }
+
+
+    if(overpay==allChange){    //OK
+          answer.status="CLOSED";
+          answer.change=[...cid];
+          return answer;
+    }
+  
+    if(overpay>0 && overpay>allGoodChange){//OK
+          answer.status="INSUFFICIENT_FUNDS";
+          answer.change=[];
+          return answer;
+    }
+    else{
+      answer.status="OPEN";//OK
+      
+                             
+      for (let i=0; i<currencies.length; i++){//OK
+        
+        for(let j=inRegisterReverse[i]; j>0; j-=currencies[i]){
+         if(overpay>=currencies[i]){
+           console.log(overpay+" " + currencies[i])
+          counter+=1; 
+          inRegisterReverse[i]-=currencies[i];
+          overpay-=currencies[i];
+          overpay = parseFloat(overpay).toFixed( 2 )
+        }  
+          }
+             timesChange.push(counter);
+             counter=0;  
+      }
+ 
+      for (let i=0; i<currencies.length; i++){//OK
+       
+        if(timesChange[i]>0){//OK
+          answerElement[0]=names[i];
+          answerElement[1]=timesChange[i]*currencies[i];
+          answer.change.push(answerElement)
+          answerElement=[];
+      }
+    }
+  
+   return answer;
     }
   }
-
-
-    for(nom; nom>0; nom--){
-      let counter=0;
-      if(overpay==all){
-        
-        changeAnswer.status="CLOSED";
-        changeAnswer.change=[...cid];
-      }
-      else if(overpay>0&&overpay>all){
-        
-        changeAnswer.status="INSUFFICIENT_FUNDS";
-        changeAnswer.change=[];
-      }
-      else{
-        
-       let currentDenom=currencyTable[nom][1];
-
-        /*for(let i=registerContent[nom][1]; i>0; i= i-currentDenom){
-          console.log(i)
-          if(changeAnswer.change[counter][0]==currencyTable[nom][0]){
-            changeAnswer.change[0][1]+=currentDenom;
-          }
-          else{
-            changeAnswer.change.push(currencyTable[nom]);
-            
-          }
-        changeAnswer.change.push(currencyTable[nom]);
-        */
-        }
-        counter++; 
-      }
-   console.log(changeAnswer.change);
-  return changeAnswer;
-}

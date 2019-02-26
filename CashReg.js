@@ -16,28 +16,28 @@ function checkCashRegister(price, cash, cid) {
 
     for (let i=0; i<currencies.length; i++){//OK
       
-      inRegister[i]=cid[i][1];//OK
-      inRegisterReverse[i]=cid[revCounter][1];
+      inRegister[i]=cid[i][1];//How much change is in the Register of every denomination
+      inRegisterReverse[i]=cid[revCounter][1];//Change in register in reverse order
       revCounter--;
     }
 
     
-    for(let i=0; i<cid.length; i++){ //OK
+    for(let i=0; i<cid.length; i++){ //All change in register summed up
       allChange+=cid[i][1];
   
-      if(overpay>=revCurrencies[i]){//OK
+      if(overpay>=revCurrencies[i]){//All change in register that is smaller han what should be given back.
         allGoodChange+=cid[i][1];
       }
     }
 
 
-    if(overpay==allChange){    //OK
+    if(overpay==allChange){    //If you should give back everything in register to pay all change
           answer.status="CLOSED";
           answer.change=[...cid];
           return answer;
     }
   
-    if(overpay>0 && overpay>allGoodChange){//OK
+    if(overpay>0 && overpay>allGoodChange){//If there is change to give back and it is more than possible to give back precisely
           answer.status="INSUFFICIENT_FUNDS";
           answer.change=[];
           return answer;

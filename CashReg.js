@@ -43,7 +43,7 @@ function checkCashRegister(price, cash, cid) {
           return answer;
     }
     else{
-      answer.status="OPEN";//OK
+      answer.status="OPEN";//If there is enough good change to give back. And there will be change remaining.  
       
                              
       for (let i=0; i<currencies.length; i++){//OK

@@ -46,7 +46,7 @@ function checkCashRegister(price, cash, cid) {
       answer.status="OPEN";//If there is enough good change to give back. And there will be change remaining.  
       
                              
-      for (let i=0; i<currencies.length; i++){//OK
+      for (let i=0; i<currencies.length; i++){//Walk through the denominations
         
         for(let j=inRegisterReverse[i]; j>0; j-=currencies[i]){
          if(overpay>=currencies[i]){

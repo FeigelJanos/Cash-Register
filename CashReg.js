@@ -63,7 +63,7 @@ function checkCashRegister(price, cash, cid) {
  
       for (let i=0; i<currencies.length; i++){//OK
        
-        if(timesChange[i]>0){//OK
+        if(timesChange[i]>0){//Writing out the change given back
           answerElement[0]=names[i];
           answerElement[1]=timesChange[i]*currencies[i];
           answer.change.push(answerElement)

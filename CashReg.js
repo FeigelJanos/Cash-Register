@@ -61,7 +61,7 @@ function checkCashRegister(price, cash, cid) {
              counter=0;  
       }
  
-      for (let i=0; i<currencies.length; i++){//OK
+      for (let i=0; i<currencies.length; i++){//Walk through all the denominations
        
         if(timesChange[i]>0){//Writing out the change given back
           answerElement[0]=names[i];
